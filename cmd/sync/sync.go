@@ -1,4 +1,3 @@
-// Runs in the background and updates the rss' once in a while
 package main
 
 import (
