@@ -1,0 +1,41 @@
+{{define "body"}}
+<h1>
+    Unread
+    ({{.count}})
+    {{if gt .count 0}}
+    <form action=/mark-as-read method=POST style="display:inline">
+        <button>Mark all as read</button>
+        <input value="{{.ids}}" name=ids type=hidden>
+    </form>
+    {{end}}
+</h1>
+{{range $title, $ps := .gps}}
+<h2>{{$title}}</h2>
+<ul>
+    {{range $_, $p := $ps}}
+    <li style="list-style-type: {{if $p.Saved}}circle{{else}}disc{{end}};">
+        <a href="/read/{{$p.Id}}">{{$p.Title}}</a>
+        <small>[&nbsp;<a href="{{$p.Link}}">Link</a>
+            {{if $p.Saved}}
+            <form action=/forget method=POST style="display:inline">
+                <input value="{{$p.Id}}" name=id type=hidden>
+                <input value="unread" name=to type=hidden>
+                | <button class=link type=submit>Forget</button>&nbsp;]
+            </form>
+            {{else}}
+            <form action=/save method=POST style="display:inline">
+                <input value="{{$p.Id}}" name=id type=hidden>
+                <input value="unread" name=to type=hidden>
+                | <button class=link type=submit>Save</button>&nbsp;]
+            </form>
+            {{end}}</small>
+    </li>
+    {{end}}
+</ul>
+{{end}}
+<script>
+    setTimeout(function () {
+        window.location.reload(false)
+    }, 10 * 60 * 1000) // 10m
+</script>
+{{end}}

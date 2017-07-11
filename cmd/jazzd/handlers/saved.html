@@ -1,0 +1,21 @@
+{{define "body"}}
+<h1>Saved ({{len .posts}})</h1>
+<ul>
+    {{range $_, $p := .posts}}
+    <li>
+        <a href="/read/{{$p.Id}}">{{$p.Title}}</a>
+        <br>
+        <small>
+            <i>{{$p.FeedTitle}}</i>
+            [ <a href="{{$p.Link}}">Link</a>
+            <form action=/forget method=POST style="display:inline">
+                <input value="{{$p.Id}}" name=id type=hidden>
+                <input value="saved" name=to type=hidden>
+                | <button class=link type=submit>Forget</button>
+            </form>]
+        </small>
+    </li>
+    {{end}}
+</ul>
+{{end}}
+

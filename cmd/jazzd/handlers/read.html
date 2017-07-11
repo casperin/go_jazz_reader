@@ -1,0 +1,25 @@
+{{define "body"}}
+<h1>
+    <a href="{{.post.Link}}">{{.post.Title}}</a>
+
+    {{if .post.Saved}}
+    <form action=/forget method=POST style="display:inline">
+        <input value="{{.post.Id}}" name=id type=hidden>
+        <button type=submit>Forget</button>
+    </form>
+    {{else}}
+    <form action=/save method=POST style="display:inline">
+        <input value="{{.post.Id}}" name=id type=hidden>
+        <button type=submit>Save</button>
+    </form>
+    {{end}}
+</h1>
+<p>
+    <strong>{{.post.FeedTitle}}</strong>
+    &ndash; {{.post.PublishedHuman}}
+</p>
+<hr>
+<div>
+{{.post.ContentHuman}}
+</div>
+{{end}}

@@ -1,0 +1,13 @@
+{{define "body"}}
+<h1>Login</h1>
+<form action=/login method=POST>
+    {{if .error}}
+    <div class=error>{{.error}}</div>
+    {{end}}
+    <label class="block mt1">
+        <div>Password</div>
+        <input type=password name=password autofocus>
+    </label>
+    <button type=submit class="block mt1">Login</button>
+</form>
+{{end}}

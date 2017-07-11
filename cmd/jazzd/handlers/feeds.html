@@ -1,0 +1,21 @@
+{{define "body"}}
+<h1>Feeds ({{len .feeds}})</h1>
+<form action=/preview-feed method=POST>
+    <input
+        type=url
+        name=url
+        value="{{.url}}"
+        placeholder="New feed url"
+        required
+        autofocus
+    >
+    <button type=submit>Preview feed</button>
+    {{if .fetchError}}
+    <div class=error>{{.fetchError}}</div>
+    {{end}}
+</form>
+<ul>
+    {{range $_, $f := .feeds}}
+    <li><a href="/feeds/{{$f.Id}}">{{$f.Title}}</a></li>
+    {{end}}
+{{end}}

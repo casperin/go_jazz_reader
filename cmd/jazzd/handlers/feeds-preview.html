@@ -1,0 +1,21 @@
+{{define "body"}}
+<h1>
+    {{.feed.Title}}
+    <small>[<a href={{.feed.Link}}>link</a>]</small>
+</h1>
+<form action=/add-feed method=POST>
+    <input value="{{.url}}" name=url type=hidden />
+    <button type=submit>Add this feed</button>
+    {{if .error}}<span class=error>{{.error}}</span>{{end}}
+</form>
+<p>{{.feed.Description}}</p>
+<hr>
+<ul>
+    {{range $_, $post := .posts}}
+    <li>
+        <a href={{$post.Link}}>{{$post.Title}}</a>
+        <small>{{$post.PublishedHuman}}</small>
+    </li>
+    {{end}}
+</ul>
+{{end}}

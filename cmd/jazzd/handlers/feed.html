@@ -1,0 +1,37 @@
+{{define "body"}}
+<h1>
+    <a href="{{.feed.Link}}">{{.feed.Title}}</a>
+    <small>({{len .posts}} posts)</small>
+</h1>
+<div>
+    {{.feed.Description}}
+    <br>
+    <code>{{.feed.Url}}</code>
+    <form action=/unsubscribe method=POST style="display:inline">
+        <input value="{{.feed.Id}}" name=id type=hidden>
+        <button>Unsubscribe</button>
+    </form>
+</div>
+<hr>
+<ul>
+    {{range $_, $p := .posts}}
+    <li style="list-style-type: {{if $p.Saved}}circle{{else}}disc{{end}};">
+        <a href="/read/{{$p.Id}}">{{$p.Title}}</a>
+        <small>| <a href="{{$p.Link}}">Link</a> | 
+            {{if $p.Saved}}
+            <form action=/forget method=POST style="display:inline">
+                <input value="{{$p.Id}}" name=id type=hidden>
+                <input value="feeds/{{$.feed.Id}}" name=to type=hidden>
+                <button class=link type=submit>Forget</button>
+            </form>
+            {{else}}
+            <form action=/save method=POST style="display:inline">
+                <input value="{{$p.Id}}" name=id type=hidden>
+                <input value="feeds/{{$.feed.Id}}" name=to type=hidden>
+                <button class=link type=submit>Save</button>
+            </form>
+            {{end}}</small>
+    </li>
+    {{end}}
+</ul>
+{{end}}

@@ -1,0 +1,33 @@
+{{define "html"}}
+<!doctype html>
+<html>
+    <head>
+        <meta charset=utf-8>
+        {{if .title}}
+        <title>♪ {{.title}}</title>
+        {{else}}
+        <title>♪ JazzReader</title>
+        {{end}}
+        <link rel=stylesheet href=/styles.css>
+        <meta name=viewport content="width=device-width">
+        {{if .base}}<base href="{{.base}}">{{end}}
+    </head>
+    <body>
+        <div class=header>
+            <a href=/ class=logo>♪</a>
+            {{if .page}}
+            <a href=/unread {{if eq .page "unread"}}class="active"{{end}}>Unread</a>
+            <a href=/saved {{if eq .page "saved"}}class="active"{{end}}>Saved</a>
+            <a href=/feeds {{if eq .page "feeds"}}class="active"{{end}}>Feeds</a>
+            {{else}}
+            <a href=/unread>Unread</a>
+            <a href=/saved>Saved</a>
+            <a href=/feeds>Feeds</a>
+            {{end}}
+            <a href=/logout style='float:right'>Logout</a>
+        </div>
+        {{template "body" .}}
+    </body>
+</html>
+{{end}}
+
