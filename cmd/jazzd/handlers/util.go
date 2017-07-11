@@ -4,7 +4,11 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/spf13/viper"
 )
+
+var domain = viper.GetString("domain")
 
 type Content map[string]interface{}
 
@@ -21,6 +25,7 @@ func renderErrorTpl(w http.ResponseWriter, status int, wrong error) error {
 	return tpl.ExecuteTemplate(w, "html", Content{
 		"status": status,
 		"error":  wrong,
+		"domain": domain,
 	})
 }
 
@@ -36,6 +41,7 @@ func renderPublicTpl(name string, w http.ResponseWriter, content Content) error 
 	if err != nil {
 		return err
 	}
+	content["domain"] = domain
 	return tpl.ExecuteTemplate(w, "html", content)
 }
 
@@ -51,6 +57,7 @@ func renderLoggedInTpl(name string, w http.ResponseWriter, content Content) erro
 	if err != nil {
 		return err
 	}
+	content["domain"] = domain
 	return tpl.ExecuteTemplate(w, "html", content)
 }
 

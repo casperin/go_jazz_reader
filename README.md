@@ -15,7 +15,8 @@ it picks up from `~/.jazz_reader/config.json`. Here is mine (slightly edited):
     "db_name": "jazzreader_dev", // required
     "password": "[password]", // to enter the app
     // how often should the app check for new entries in each rss
-    "sync_rss_every_x_minute": 60
+    "sync_rss_every_x_minute": 60,
+    "domain": "http://where-you-run-this.com"
 }
 ```
 

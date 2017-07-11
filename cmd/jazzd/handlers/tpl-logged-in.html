@@ -16,15 +16,15 @@
         <div class=header>
             <a href=/ class=logo>♪</a>
             {{if .page}}
-            <a href=/unread {{if eq .page "unread"}}class="active"{{end}}>Unread</a>
-            <a href=/saved {{if eq .page "saved"}}class="active"{{end}}>Saved</a>
-            <a href=/feeds {{if eq .page "feeds"}}class="active"{{end}}>Feeds</a>
+            <a href={{.domain}}/unread {{if eq .page "unread"}}class="active"{{end}}>Unread</a>
+            <a href={{.domain}}/saved {{if eq .page "saved"}}class="active"{{end}}>Saved</a>
+            <a href={{.domain}}/feeds {{if eq .page "feeds"}}class="active"{{end}}>Feeds</a>
             {{else}}
-            <a href=/unread>Unread</a>
-            <a href=/saved>Saved</a>
-            <a href=/feeds>Feeds</a>
+            <a href={{.domain}}/unread>Unread</a>
+            <a href={{.domain}}/saved>Saved</a>
+            <a href={{.domain}}/feeds>Feeds</a>
             {{end}}
-            <a href=/logout style='float:right'>Logout</a>
+            <a href={{.domain}}/logout style='float:right'>Logout</a>
         </div>
         {{template "body" .}}
     </body>
