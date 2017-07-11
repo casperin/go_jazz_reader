@@ -41,7 +41,9 @@ func renderPublicTpl(name string, w http.ResponseWriter, content Content) error 
 	if err != nil {
 		return err
 	}
-	content["domain"] = domain
+	if content != nil {
+		content["domain"] = domain
+	}
 	return tpl.ExecuteTemplate(w, "html", content)
 }
 
@@ -57,7 +59,9 @@ func renderLoggedInTpl(name string, w http.ResponseWriter, content Content) erro
 	if err != nil {
 		return err
 	}
-	content["domain"] = domain
+	if content != nil {
+		content["domain"] = domain
+	}
 	return tpl.ExecuteTemplate(w, "html", content)
 }
 
