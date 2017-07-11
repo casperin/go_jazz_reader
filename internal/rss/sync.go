@@ -33,7 +33,7 @@ func SyncDaemon() error {
 				log.Println("Error updating time for app:\n", err)
 			}
 		}
-		time.Sleep(1 * time.Minute)
+		time.Sleep(10 * time.Minute)
 	}
 }
 
