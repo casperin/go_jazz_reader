@@ -3,6 +3,7 @@ package post
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 
 	"github.com/casperin/jazz_reader/internal/db"
 )
@@ -19,6 +20,9 @@ func findBySql(sqlStr string, value interface{}) ([]*Post, error) {
 	err := db.Conn.Select(&p, sqlStr, value)
 	if err == sql.ErrNoRows {
 		return nil, ErrNotFound
+	}
+	if err != nil {
+		return p, fmt.Errorf("Could not find post:\n%v", err)
 	}
 	return p, err
 }

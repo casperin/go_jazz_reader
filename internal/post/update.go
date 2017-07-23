@@ -18,11 +18,17 @@ func MarkAsRead(ids []int) error {
 	}
 	sql += ")"
 	_, err := db.Conn.Exec(sql, args...)
-	return err
+	if err != nil {
+		return fmt.Errorf("Could mark items as read:\n%v", err)
+	}
+	return nil
 }
 
 func SetSaved(id int, saved bool) error {
 	sql := `update posts set saved=$1 where id=$2`
 	_, err := db.Conn.Exec(sql, saved, id)
-	return err
+	if err != nil {
+		return fmt.Errorf("Could not set saved:\n%v", err)
+	}
+	return nil
 }

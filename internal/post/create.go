@@ -38,5 +38,8 @@ func Insert(ps []*Post) error {
 	}
 	sql += " on conflict do nothing;"
 	_, err := db.Conn.Exec(sql, values...)
-	return err
+	if err != nil {
+		return fmt.Errorf("There was problem saving items from %s:\n%v", ps[0].FeedTitle, err)
+	}
+	return nil
 }

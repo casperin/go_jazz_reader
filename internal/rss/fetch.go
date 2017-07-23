@@ -1,6 +1,7 @@
 package rss
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/casperin/jazz_reader/internal/feed"
@@ -13,7 +14,7 @@ import (
 func FetchUrl(url string) (*feed.Feed, []*post.Post, error) {
 	fetched, err := gofeed.NewParser().ParseURL(url)
 	if fetched == nil {
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("Could not parse %s:\n%v", url, err)
 	}
 	f := parseFeed(url, fetched, err)
 	ps := parsePosts(fetched.Items, f.Title)

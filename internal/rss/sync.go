@@ -17,7 +17,7 @@ func SyncDaemon() error {
 	for {
 		a, err := app.Get()
 		if err != nil {
-			return err
+			return fmt.Errorf("Could not get app settings:\n%v", err)
 		}
 		everyXMinute := viper.GetInt("sync_rss_every_x_minute")
 		if everyXMinute < 10 {
@@ -40,7 +40,7 @@ func SyncDaemon() error {
 func SyncAll() error {
 	fs, err := feed.FindSummaries()
 	if err != nil {
-		return err
+		return fmt.Errorf("Could not find feed summaries:\n%v", err)
 	}
 	var wg sync.WaitGroup
 	for _, f := range fs {
