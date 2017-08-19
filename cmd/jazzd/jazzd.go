@@ -11,6 +11,7 @@ import (
 	"github.com/casperin/jazz_reader/internal/rss"
 	"github.com/go-chi/chi"
 	"github.com/gorilla/context"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -42,11 +43,11 @@ func main() {
 		r.Post("/add-feed", handlers.FeedsAdd)
 		r.Post("/unsubscribe", handlers.Unsubscribe)
 
-		// posts post
+		// posts util
 		r.Post("/mark-as-read", handlers.MarkAsRead)
-		r.Post("/save", handlers.PostSave)
-		r.Post("/forget", handlers.PostForget)
+		r.Get("/save/{id}", handlers.SavePost)
+		r.Get("/forget/{id}", handlers.ForgetPost)
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", context.ClearHandler(r)))
+	log.Fatal(http.ListenAndServe(":"+viper.GetString("port"), context.ClearHandler(r)))
 }

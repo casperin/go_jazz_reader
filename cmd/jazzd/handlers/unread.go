@@ -14,13 +14,8 @@ func Unread(w http.ResponseWriter, r *http.Request) {
 		mustRenderErrorTpl(w, 500, err)
 		return
 	}
-	gps := map[string][]*post.Post{}
 	ids := ""
 	for i, p := range ps {
-		if _, ok := gps[p.FeedTitle]; !ok {
-			gps[p.FeedTitle] = []*post.Post{}
-		}
-		gps[p.FeedTitle] = append(gps[p.FeedTitle], p)
 		if i > 0 {
 			ids += ","
 		}
@@ -28,9 +23,9 @@ func Unread(w http.ResponseWriter, r *http.Request) {
 	}
 	mustRenderLoggedInTpl("/unread", w, Content{
 		"count": len(ps),
-		"gps":   gps,
 		"ids":   ids,
 		"page":  "unread",
+		"posts": ps,
 		"title": fmt.Sprintf("%v unread", len(ps)),
 	})
 }

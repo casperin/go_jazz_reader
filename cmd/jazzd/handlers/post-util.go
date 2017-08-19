@@ -7,10 +7,11 @@ import (
 
 	"github.com/casperin/jazz_reader/internal/post"
 	"github.com/casperin/jazz_reader/internal/util/str"
+	"github.com/go-chi/chi"
 )
 
-func PostSave(w http.ResponseWriter, r *http.Request) {
-	idStr := r.FormValue("id")
+func SavePost(w http.ResponseWriter, r *http.Request) {
+	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		mustRenderErrorTpl(w, 500, err)
@@ -25,8 +26,8 @@ func PostSave(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/"+to, 302)
 }
 
-func PostForget(w http.ResponseWriter, r *http.Request) {
-	idStr := r.FormValue("id")
+func ForgetPost(w http.ResponseWriter, r *http.Request) {
+	idStr := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		mustRenderErrorTpl(w, 500, err)

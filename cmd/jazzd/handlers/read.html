@@ -1,22 +1,13 @@
 {{define "body"}}
-<h1>
-    <a href="{{.post.Link}}">{{.post.Title}}</a>
-
-    {{if .post.Saved}}
-    <form action={{.domain}}/forget method=POST style="display:inline">
-        <input value="{{.post.Id}}" name=id type=hidden>
-        <button type=submit>Forget</button>
-    </form>
-    {{else}}
-    <form action={{.domain}}/save method=POST style="display:inline">
-        <input value="{{.post.Id}}" name=id type=hidden>
-        <button type=submit>Save</button>
-    </form>
-    {{end}}
-</h1>
+<h1><a href="{{.post.Link}}">{{.post.Title}}</a></h1>
 <p>
     <strong>{{.post.FeedTitle}}</strong>
-    &ndash; {{.post.PublishedHuman}}
+    &ndash; {{.post.PublishedHuman}} &ndash;
+    {{if .post.Saved}}
+    <a href="{{.domain}}/forget/{{.post.Id}}?to=read/{{.post.Id}}" data-keep-scroll-position="true">forget</a>
+    {{else}}
+    <a href="{{.domain}}/save/{{.post.Id}}?to=read/{{.post.Id}}" data-keep-scroll-position="true">save</a>
+    {{end}}
 </p>
 <hr>
 <div>

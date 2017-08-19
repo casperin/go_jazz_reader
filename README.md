@@ -47,7 +47,7 @@ WantedBy=multi-user.target
 ```
 After adding this file (we can do it manually in a clean install) we run
 ```
-systemctl enable delbetaling.service
+systemctl enable jazz-reader.service
 ```
 and it'll symlink it up for us. From then on, we can use service to start and stop it as we please.
 

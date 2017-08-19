@@ -15,18 +15,48 @@
     <body>
         <div class=header>
             <a href=/ class=logo>♪</a>
-            {{if .page}}
-            <a href={{.domain}}/unread {{if eq .page "unread"}}class="active"{{end}}>Unread</a>
-            <a href={{.domain}}/saved {{if eq .page "saved"}}class="active"{{end}}>Saved</a>
-            <a href={{.domain}}/feeds {{if eq .page "feeds"}}class="active"{{end}}>Feeds</a>
-            {{else}}
             <a href={{.domain}}/unread>Unread</a>
             <a href={{.domain}}/saved>Saved</a>
             <a href={{.domain}}/feeds>Feeds</a>
-            {{end}}
             <a href={{.domain}}/logout style='float:right'>Logout</a>
         </div>
         {{template "body" .}}
+
+        <script>
+            ;(function () {
+                var pos = localStorage.getItem("scroll-position")
+                if (pos) {
+                    window.scrollTo(0, pos)
+                    localStorage.removeItem("scroll-position")
+                }
+
+                document.body.addEventListener("click", function (e) {
+                    if (e.target.getAttribute("data-keep-scroll-position")) {
+                        localStorage.setItem("scroll-position", window.scrollY)
+                    }
+                })
+            }())
+
+            ;(function () {
+                document.body.classList.toggle("night", !!localStorage.getItem("night"))
+
+                var bulb = document.createElement("a")
+                bulb.innerHTML = "💡"
+                bulb.href = "#"
+                bulb.style = "float:right;text-decoration:none"
+                bulb.onclick = function (e) {
+                    e.preventDefault()
+                    if (!!localStorage.getItem("night")) {
+                        localStorage.removeItem("night")
+                        document.body.classList.remove("night")
+                    } else {
+                        localStorage.setItem("night", true)
+                        document.body.classList.add("night")
+                    }
+                }
+                document.querySelector(".header").appendChild(bulb)
+            }())
+        </script>
     </body>
 </html>
 {{end}}

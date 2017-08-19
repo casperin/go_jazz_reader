@@ -19,17 +19,9 @@
         <a href="/read/{{$p.Id}}">{{$p.Title}}</a>
         <small>| <a href="{{$p.Link}}">Link</a> | 
             {{if $p.Saved}}
-            <form action=/forget method=POST style="display:inline">
-                <input value="{{$p.Id}}" name=id type=hidden>
-                <input value="feeds/{{$.feed.Id}}" name=to type=hidden>
-                <button class=link type=submit>Forget</button>
-            </form>
+            <a href="/forget/{{$p.Id}}?to=feeds/{{$.feed.Id}}" data-keep-scroll-position="true">forget</a>
             {{else}}
-            <form action=/save method=POST style="display:inline">
-                <input value="{{$p.Id}}" name=id type=hidden>
-                <input value="feeds/{{$.feed.Id}}" name=to type=hidden>
-                <button class=link type=submit>Save</button>
-            </form>
+            <a href="/save/{{$p.Id}}?to=feeds/{{$.feed.Id}}" data-keep-scroll-position="true">save</a>
             {{end}}</small>
     </li>
     {{end}}
