@@ -21,3 +21,45 @@ it picks up from `~/.jazz_reader/config.json`. Here is mine (slightly edited):
 ```
 
 There are currently zero tests. Go me! :)
+
+## Serviced
+
+This is info for myself about how I run it on my machine.
+
+Service file can be found here:
+```
+/lib/systemd/system/jazz-reader.service
+```
+Should look something like
+```
+[Unit]
+Description=Webhook
+
+[Service]
+User=g
+Group=g
+Restart=on-failure
+WorkingDirectory=/home/g/code/go/src/github.com/casperin/jazz_reader
+ExecStart=/home/g/code/go/src/github.com/casperin/jazz_reader/jazzd
+
+[Install]
+WantedBy=multi-user.target
+```
+After adding this file (we can do it manually in a clean install) we run
+```
+systemctl enable delbetaling.service
+```
+and it'll symlink it up for us. From then on, we can use service to start and stop it as we please.
+
+To "deploy" locally, do
+```
+go build cmd/jazzd/*.go
+sudo service jazz-reader restart
+```
+
+Logs can be found with
+```
+sudo journalctl -u jazz-reader
+# Or running logs
+sudo journalctl -f -u jazz-reader
+```
