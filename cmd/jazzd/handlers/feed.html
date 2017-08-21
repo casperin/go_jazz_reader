@@ -17,12 +17,15 @@
     {{range $_, $p := .posts}}
     <li style="list-style-type: {{if $p.Saved}}circle{{else}}disc{{end}};">
         <a href="/read/{{$p.Id}}">{{$p.Title}}</a>
-        <small>| <a href="{{$p.Link}}">Link</a> | 
+        <small>
+            ::
+            <a href="{{$p.Link}}">link</a>
             {{if $p.Saved}}
             <a href="/forget/{{$p.Id}}?to=feeds/{{$.feed.Id}}" data-keep-scroll-position="true">forget</a>
             {{else}}
             <a href="/save/{{$p.Id}}?to=feeds/{{$.feed.Id}}" data-keep-scroll-position="true">save</a>
-            {{end}}</small>
+            {{end}}
+        </small>
     </li>
     {{end}}
 </ul>

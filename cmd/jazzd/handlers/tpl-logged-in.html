@@ -43,7 +43,8 @@
                 var bulb = document.createElement("a")
                 bulb.innerHTML = "💡"
                 bulb.href = "#"
-                bulb.style = "float:right;text-decoration:none"
+                bulb.style.float = "right"
+                bulb.style.textDecoration = "none"
                 bulb.onclick = function (e) {
                     e.preventDefault()
                     if (!!localStorage.getItem("night")) {
