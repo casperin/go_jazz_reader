@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -47,7 +48,10 @@ func main() {
 		r.Post("/mark-as-read", handlers.MarkAsRead)
 		r.Get("/save/{id}", handlers.SavePost)
 		r.Get("/forget/{id}", handlers.ForgetPost)
+		r.Post("/save-url", handlers.SaveUrl)
+		r.Get("/forget-url/{id}", handlers.ForgetUrl)
 	})
 
+	fmt.Printf("Listening on port %v\n", viper.GetString("port"))
 	log.Fatal(http.ListenAndServe(":"+viper.GetString("port"), context.ClearHandler(r)))
 }

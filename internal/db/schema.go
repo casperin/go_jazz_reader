@@ -35,4 +35,12 @@ const (
 		created_at timestamp NOT NULL,
 		FOREIGN KEY (feed_id) REFERENCES feeds(id)
 	);`
+
+	dropUrlTable = `drop table urls;`
+	urlTable     = `create table urls (
+		id bigserial primary key,
+		url varchar(200) NOT NULL,
+		title varchar(200) NOT NULL default '',
+		created_at timestamp NOT NULL
+	);`
 )

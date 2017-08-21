@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 
 	"github.com/casperin/jazz_reader/internal/post"
+	"github.com/casperin/jazz_reader/internal/urls"
 	"github.com/casperin/jazz_reader/internal/util/str"
 	"github.com/go-chi/chi"
 )
@@ -55,4 +57,33 @@ func MarkAsRead(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http.Redirect(w, r, "/unread", 302)
+}
+
+func SaveUrl(w http.ResponseWriter, r *http.Request) {
+	_, err := url.Parse(r.FormValue("url"))
+	if err != nil {
+		http.Redirect(w, r, "/saved?error=bad url!", 302)
+		return
+	}
+	err = urls.Save(r.FormValue("url"))
+	if err != nil {
+		mustRenderErrorTpl(w, 500, err)
+		return
+	}
+	http.Redirect(w, r, "/saved", 302)
+}
+
+func ForgetUrl(w http.ResponseWriter, r *http.Request) {
+	idStr := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		mustRenderErrorTpl(w, 500, err)
+		return
+	}
+	err = urls.Remove(id)
+	if err != nil {
+		mustRenderErrorTpl(w, 500, err)
+		return
+	}
+	http.Redirect(w, r, "/saved", 302)
 }

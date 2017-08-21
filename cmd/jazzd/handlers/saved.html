@@ -1,6 +1,18 @@
 {{define "body"}}
 <h1>Saved ({{len .posts}})</h1>
+
+<form action=/save-url method=POST>
+    <input name=url type=url placeholder="http://...">
+    <button type=submit>Save url</button>
+</form>
+
 <ul>
+    {{range $_, $u := .urls}}
+    <li>
+        <a href={{$u.Url}}>{{$u.Url}}</a>
+        <small>:: <a href=/forget-url/{{$u.Id}}>forget</a></small>
+    </li>
+    {{end}}
     {{range $_, $p := .posts}}
     <li>
         <a href="/read/{{$p.Id}}">{{$p.Title}}</a>

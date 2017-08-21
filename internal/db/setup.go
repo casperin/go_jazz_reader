@@ -16,3 +16,7 @@ func Reset() {
 	Drop()
 	Create()
 }
+
+func AddUrlTable() {
+	Conn.MustExec(urlTable)
+}
