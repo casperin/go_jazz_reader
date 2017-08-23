@@ -9,7 +9,7 @@
 <ul>
     {{range $_, $u := .urls}}
     <li>
-        <a href={{$u.Url}}>{{$u.Url}}</a>
+        <a href={{$u.Url}}>{{$u.HumanString}}</a>
         <small>:: <a href=/forget-url/{{$u.Id}}>forget</a></small>
     </li>
     {{end}}
