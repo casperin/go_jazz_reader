@@ -19,10 +19,12 @@ func Saved(w http.ResponseWriter, r *http.Request) {
 		mustRenderErrorTpl(w, 500, err)
 		return
 	}
+	count := len(ps) + len(us)
 	mustRenderLoggedInTpl("saved", w, Content{
 		"posts": ps,
 		"urls":  us,
 		"page":  "saved",
-		"title": fmt.Sprintf("%v saved", len(ps)+len(us)),
+		"count": count,
+		"title": fmt.Sprintf("%v saved", count),
 	})
 }

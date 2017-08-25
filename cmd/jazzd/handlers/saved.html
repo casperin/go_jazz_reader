@@ -1,5 +1,5 @@
 {{define "body"}}
-<h1>Saved ({{len .posts}})</h1>
+<h1>Saved ({{.count}})</h1>
 
 <form action=/save-url method=POST>
     <input name=url type=url placeholder="http://...">
