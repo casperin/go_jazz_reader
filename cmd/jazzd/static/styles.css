@@ -1,6 +1,14 @@
 body {
-    font-size: 19px;
-    line-height: 1.2;
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
 }
 
 button {
@@ -32,6 +40,10 @@ a.logo {
 
 .block {
     display: block
+}
+
+.content {
+    max-width: 50em;
 }
 
 li + li {

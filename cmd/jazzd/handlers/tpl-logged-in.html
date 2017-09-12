@@ -20,7 +20,9 @@
             <a href={{.domain}}/feeds>Feeds</a>
             <a href={{.domain}}/logout style='float:right'>Logout</a>
         </div>
-        {{template "body" .}}
+        <div class=content>
+            {{template "body" .}}
+        </div>
 
         <script>
             ;(function () {
