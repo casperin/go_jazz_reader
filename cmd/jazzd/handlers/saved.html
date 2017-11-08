@@ -6,25 +6,77 @@
     <button type=submit>Save url</button>
 </form>
 
-<ul>
+<ul class=posts>
     {{range $_, $u := .urls}}
-    <li>
-        <a href={{$u.Url}}>{{$u.HumanString}}</a>
+    <li class=saved-url>
+        <a href={{$u.Url}} class=link>{{$u.HumanString}}</a>
         <small>:: <a href=/forget-url/{{$u.Id}}>forget</a></small>
     </li>
     {{end}}
     {{range $_, $p := .posts}}
     <li>
-        <a href="/read/{{$p.Id}}">{{$p.Title}}</a>
+        <a href="/read/{{$p.Id}}" class=link>{{$p.Title}}</a>
         <br>
         <small>
             <i>{{$p.FeedTitle}}</i>
             ::
-            <a href="{{$p.Link}}">link</a>
-            <a href="/forget/{{$p.Id}}?to=saved" data-keep-scroll-position="true">forget</a>
+            <a href="{{$p.Link}}" class=direct>link</a>
+            <a href="/forget/{{$p.Id}}?to=saved" class=save data-keep-scroll-position="true">forget</a>
         </small>
     </li>
     {{end}}
 </ul>
+<script>
+;(function () {
+    var posts = Array.from(document.querySelectorAll(".posts li"))
+    if (!posts) return
+    var selected = -1
+    if (localStorage.getItem('selected') !== null) {
+        selected = Number(localStorage.getItem('selected'))
+        localStorage.removeItem('selected')
+    }
+    if (selected >= posts.length) selected = posts.length - 1
+    if (selected !== -1) posts[selected].classList.add('selected')
+    const move = (dir) => {
+        posts[selected] && posts[selected].classList.remove("selected")
+        selected = selected + dir
+        if (selected < 0) selected = posts.length - 1
+        if (selected >= posts.length) selected = 0
+        var p = posts[selected]
+        p.classList.add("selected")
+        // Make sure selected post is within window
+        var rect = p.getBoundingClientRect()
+        if (rect.top < 0) {
+            window.scrollTo(0, window.scrollY + rect.top - 10)
+        }
+        if (rect.bottom > window.innerHeight) {
+            window.scrollTo(0, window.scrollY + rect.bottom - window.innerHeight + 10)
+        }
+    }
+    const save = () => {
+        if (!posts[selected]) return
+        var save = posts[selected].querySelector(".save")
+        if (!save) return
+        localStorage.setItem('selected', selected)
+        save.click()
+    }
+    const go = sel => {
+        if (!posts[selected]) return
+        var el = posts[selected].querySelector(sel)
+        if (el && el.href) window.open(el.href, '_blank')
+    }
+    window.addEventListener("keypress", function (e) {
+        switch (e.key) {
+            case 'j': return move(1)
+            case 'k': return move(-1)
+            case 's': return save()
+            case 'g': return go('.direct')
+            case 'o':
+            case 'Enter':
+              return go('.link')
+        }
+    })
+}())
+</script>
 {{end}}
 

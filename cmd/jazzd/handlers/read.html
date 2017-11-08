@@ -10,7 +10,37 @@
     {{end}}
 </p>
 <hr>
-<div>
+<div class=post>
 {{.post.ContentHuman}}
 </div>
+
+<script>
+;(function () {
+    var links = Array.from(document.querySelectorAll(".post a"))
+    if (!links || !links.length) return
+    var selected = -1
+    const move = dir => {
+        selected = selected + dir
+        if (selected < 0) selected = links.length - 1
+        if (selected >= links.length) selected = 0
+        var l = links[selected]
+        l.focus()
+        // Make sure selected post is within window
+        var rect = l.getBoundingClientRect()
+        if (rect.top < 0) {
+            window.scrollTo(0, window.scrollY + rect.top - 10)
+        }
+        if (rect.bottom > window.innerHeight) {
+            window.scrollTo(0, window.scrollY + rect.bottom - window.innerHeight + 10)
+        }
+    }
+
+    window.addEventListener("keypress", function (e) {
+        switch (e.key) {
+            case 'j': return move(1)
+            case 'k': return move(-1)
+        }
+    })
+}())
+</script>
 {{end}}
